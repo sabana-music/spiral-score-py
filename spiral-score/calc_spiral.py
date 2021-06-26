@@ -35,8 +35,8 @@ def calc_spiral_pos(freq, f0, distance_func):
 
     points = []
     for f in freq:
-        r = pi/2 - 2*pi*log2(f/f0)
-        theta = distance_func(f)
+        r = distance_func(f)
+        theta = pi/2 - 2*pi*log2(f/f0)
         points.append((r*cos(theta), r*sin(theta)))
 
     if multi_freqs:
@@ -66,3 +66,9 @@ def create_rational_linear_comb(f0, f_end, lin):
     linear = create_linear(f0, f_end)
     rational = create_rational(f0)
     return lambda f: lin * linear(f) + (1 - lin) * rational(f)
+
+
+if __name__ == "__main__":
+    f0 = 100
+    pos = calc_spiral_pos(200, f0, create_rational(f0))
+    print(pos)
